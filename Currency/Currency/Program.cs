@@ -17,11 +17,11 @@ namespace Currency
                 .Build();
                         
             //setup our CUSTOM SERVICES AND CONFIGURATION USE
-            var serviceProvider = new ServiceCollection()                  
+            var serviceProvider = new ServiceCollection()       
                 .AddSingleton<ICurrenciesAPI, CurrenciesAPI>()
-                .AddSingleton<IConfiguration>(configuration)
+                .AddSingleton<IConfiguration>(configuration)                
                 .BuildServiceProvider();
-
+            
             #endregion
 
             //get our custom service
@@ -43,16 +43,24 @@ namespace Currency
             Console.WriteLine("MOEDA PARA SER CONVERTIDA: ");
             var moedaConverter = Console.ReadLine();
 
-            var result = bar.ConvertCurrency(moeda, montanteResult, moedaConverter);
-
-            if(result.Result.Error > 0)
+            try
             {
-                Console.WriteLine("\nErro: {0}\n", result.Result.ErrorMessage);
+                var result = bar.ConvertCurrency(moeda, montanteResult, moedaConverter);
+                
+                if (result.Result.Error > 0)
+                {
+                    Console.WriteLine("\nErro: {0}\n", result.Result.ErrorMessage);
+                }
+                else
+                {
+                    Console.WriteLine("\nResultado convertido: {0}\n", result.Result.Amount);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                Console.WriteLine("\nResultado convertido: {0}\n", result.Result.Amount);
+                Console.WriteLine(ex.ToString());
             }
+           
         }
     }
 }

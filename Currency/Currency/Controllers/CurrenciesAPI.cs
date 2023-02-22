@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace Currency.Controllers
     {
         private readonly IConfiguration Configuration;
         internal const string ApiKey = "DuwkQ78JuUnH6UwX2mQcsVmS6wTGPL";
+        internal const string BaseUrl = "https://www.amdoren.com/api/currency.php?api_key=";
 
         public CurrenciesAPI(IConfiguration configuration) 
         {
@@ -18,19 +20,27 @@ namespace Currency.Controllers
         }
 
         public async Task<APIResponseObject> ConvertCurrency(string inputCurrency, float inputAmount, string desiredCurrency)
-        { 
-            using(HttpClient client = new HttpClient())
+        {
+            try
             {
-                var apiKey = Configuration.GetSection("API")["apiKey"] ?? ApiKey;
-                
-                string baseAddress = string.Format("https://www.amdoren.com/api/currency.php?api_key={0}&from={1}&to={2}&amount={3}", apiKey, inputCurrency, desiredCurrency, inputAmount);
-                client.BaseAddress = new Uri(baseAddress);
+                using (HttpClient client = new HttpClient())
+                {
+                    var apiKey = Configuration.GetSection("API")["apiKey"] ?? ApiKey;
+                    var baseUrl = Configuration.GetSection("API")["baseUrl"] ?? BaseUrl;
 
-                var response = await client.GetStringAsync(client.BaseAddress);
-                
-                var result = JsonConvert.DeserializeObject<APIResponseObject>(response);
+                    string endpoint = string.Format("{0}{1}&from={2}&to={3}&amount={4}", baseUrl, apiKey, inputCurrency, desiredCurrency, inputAmount);
+                    client.BaseAddress = new Uri(endpoint);
+                    
+                    var response = await client.GetStringAsync(client.BaseAddress);
 
-                return result;
+                    APIResponseObject result = JsonConvert.DeserializeObject<APIResponseObject>(response);
+
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
