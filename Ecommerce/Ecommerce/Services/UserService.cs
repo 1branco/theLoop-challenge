@@ -1,9 +1,7 @@
 ﻿using Ecommerce.Models;
 using Ecommerce.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 

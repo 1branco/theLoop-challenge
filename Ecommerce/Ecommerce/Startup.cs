@@ -1,3 +1,5 @@
+using AutoMapper;
+using Ecommerce.MappingProfiles;
 using Ecommerce.Services;
 using Ecommerce.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +36,15 @@ namespace Ecommerce
             {
                 client.BaseAddress = new Uri(Configuration["BaseUrl"]);
             });
+
+            // Auto Mapper Configurations
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddMvc();
             services.AddControllersWithViews();

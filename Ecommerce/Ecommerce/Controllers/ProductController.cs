@@ -1,6 +1,9 @@
-﻿using Ecommerce.Services.Interfaces;
+﻿using AutoMapper;
+using Ecommerce.Services.Interfaces;
+using Ecommerce.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Ecommerce.Controllers
@@ -8,9 +11,12 @@ namespace Ecommerce.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService ProductService;
-        public ProductController(IProductService productService)
+        private readonly IMapper Mapper;
+
+        public ProductController(IProductService productService, IMapper mapper)
         {
             ProductService = productService;
+            Mapper = mapper;
         }
 
         [HttpGet]
@@ -19,8 +25,8 @@ namespace Ecommerce.Controllers
             try
             {
                 var products = await ProductService.GetAllProducts();
-            
-                return View(products);
+                            
+                return View(Mapper.Map<IList<ProductViewModel>>(products));
             }
             catch(Exception)
             {

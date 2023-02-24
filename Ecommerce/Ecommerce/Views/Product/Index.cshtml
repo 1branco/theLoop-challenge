@@ -1,0 +1,40 @@
+﻿@using Ecommerce.ViewModels;
+@model IList<ProductViewModel>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Products listing</h1>
+</div>
+
+<div class="container">
+    <h3 class="p-3 text-center">Products from <a href="https://fakestoreapi.com/">fakestoreapi.com</a></h3>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@product.Image" width="100px" height="auto">
+                    </td>
+                    <td>@product.Title</td>
+                    <td>@product.Price</td>
+                    <td>@product.Category</td>
+                    <td>@product.Description</td>                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+    
