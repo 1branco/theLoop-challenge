@@ -20,11 +20,11 @@ namespace Ecommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] string sort = "asc")
         {
             try
             {
-                var products = await ProductService.GetAllProducts();
+                var products = await ProductService.GetAllProducts(sort);
                             
                 return View(Mapper.Map<IList<ProductViewModel>>(products));
             }
@@ -35,13 +35,14 @@ namespace Ecommerce.Controllers
         }
 
         [HttpGet]
-        public IActionResult ProductById(int id)
+        [Route("[controller]/{id}")]
+        public async Task<IActionResult> ProductById(int id)
         {
             try
             {
-                var product = ProductService.GetProductById(id);
+                var product = await ProductService.GetProductById(id);
 
-                return View(product);
+                return View(Mapper.Map<ProductViewModel>(product));
             }
             catch(Exception)
             {
@@ -50,6 +51,7 @@ namespace Ecommerce.Controllers
         }
 
         [HttpGet]
+        [Route("[controller]/allcategories")]
         public async Task<IActionResult> CategoriesList()
         {
             try

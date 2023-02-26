@@ -13,7 +13,7 @@ namespace Ecommerce.Services
         private readonly HttpClient HttpClient;
 
         private const string LoginEndpoint = "auth/login";
-        private const string UserEndpoint = "users/";
+        private const string UserEndpoint = "users";
 
         public UserService(IHttpClientFactory httpClientFactory)
         {
@@ -21,9 +21,9 @@ namespace Ecommerce.Services
             HttpClient = HttpClientFactory.CreateClient();
         }
 
-        public async Task<IList<User>> GetAllUsers()
+        public async Task<IList<User>> GetAllUsers(string sort)
         {
-            var response = await HttpClient.GetAsync(UserEndpoint);
+            var response = await HttpClient.GetAsync(string.Format($"{UserEndpoint}?sort={sort}"));
 
             var result = await response.Content.ReadAsStringAsync();
 
@@ -34,7 +34,7 @@ namespace Ecommerce.Services
 
         public async Task<User> GetUserById(int userId)
         {
-            var response = await HttpClient.GetAsync(UserEndpoint + userId);
+            var response = await HttpClient.GetAsync(UserEndpoint + "/" + userId);
 
             var result = await response.Content.ReadAsStringAsync();
 
@@ -48,7 +48,7 @@ namespace Ecommerce.Services
             var response = await HttpClient.PostAsync(LoginEndpoint, 
                 new StringContent(JsonConvert.SerializeObject(login), System.Text.Encoding.UTF8, "application/json"));
 
-            var result = await response.Content.ReadAsStringAsync();
+            var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             return result;
         }

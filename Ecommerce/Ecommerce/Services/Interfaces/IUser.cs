@@ -6,7 +6,7 @@ namespace Ecommerce.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<IList<User>> GetAllUsers();
+        Task<IList<User>> GetAllUsers(string sort);
 
         Task<User> GetUserById(int userId);
 

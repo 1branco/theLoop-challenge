@@ -10,6 +10,15 @@ namespace Ecommerce.MappingProfiles
         {
             CreateMap<Product, ProductViewModel>();
             CreateMap<ProductViewModel, Product>();
+
+            CreateMap<User, UserViewModel>();
+            CreateMap<UserViewModel, User>();
+
+            CreateMap<Cart, CartViewModel>();
+            CreateMap<CartViewModel, Cart>();
+            CreateMap<CartProduct, Product>();
+            CreateMap<Cart, CartProduct>();
+
         }
     }
 }

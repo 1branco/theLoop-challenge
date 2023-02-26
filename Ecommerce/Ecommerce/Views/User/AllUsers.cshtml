@@ -1,0 +1,38 @@
+﻿@using Ecommerce.ViewModels;
+@model IList<UserViewModel>
+
+@{
+    ViewData["Title"] = "Users Listing";
+}
+
+<div class="text-center">
+    <h1 class="display-4">All Users listing</h1>
+</div>
+
+<div class="container">
+    <h3 class="p-3 text-center">Users registered in <a href="https://fakestoreapi.com/">fakestoreapi.com</a></h3>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Username</td>
+                    <td>@product.Name.FirstName @product.Name.LastName</td>
+                    <td>@product.Email</td>
+                    <td>@product.Phone</td>
+                    <td>@product.Address.Street No. @product.Address.Number, 
+                        @product.Address.City, @product.Address.Zipcode</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,38 @@
+﻿@using Ecommerce.ViewModels;
+@model ProductViewModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Product's details listing</h1>
+</div>
+
+<div class="container">
+    <h3 class="p-3 text-center">Product's details</h3>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(Model => Model.Image)</th>
+                <th>@Html.DisplayNameFor(Model => Model.Title)</th>
+                <th>@Html.DisplayNameFor(Model => Model.Description)</th>
+                <th>@Html.DisplayNameFor(Model => Model.Category)</th>
+                <th>@Html.DisplayNameFor(Model => Model.Rating.Rate)</th>
+                <th>@Html.DisplayNameFor(Model => Model.Price)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <img src="@Model.Image" width="100px" height="auto" />
+                </td>
+                <td>@Model.Title</td>
+                <td>@Model.Description</td>
+                <td>@Model.Category</td>
+                <td>@Model.Rating.Rate</td>
+                <td>@Model.Price</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

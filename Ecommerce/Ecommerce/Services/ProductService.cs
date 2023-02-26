@@ -32,9 +32,10 @@ namespace Ecommerce.Services
             return categories;
         }
 
-        public async Task<IList<Product>> GetAllProducts()
+        public async Task<IList<Product>> GetAllProducts(string sort)
         {
-            var response = await HttpClient.GetAsync(ProductsEndpoint);
+            //Buils endpoint like "/products?sort=desc"
+            var response = await HttpClient.GetAsync(string.Format($"{ProductsEndpoint}?sort={sort}"));
 
             var result = await response.Content.ReadAsStringAsync();
 

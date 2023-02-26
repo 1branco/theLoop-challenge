@@ -9,9 +9,12 @@ namespace Ecommerce.Services.Interfaces
     {
         Task<IList<Cart>> GetAllCarts();
 
-        Task<Cart> GetCart(int Id);
+        Task<Cart> GetCart(int cartId);
 
-        bool UpdateCart(Cart cart);
+        Task<Cart> UpdateCart(Cart cart);
 
+        Task<Cart> CreateNewCart(int userId, IList<Product> products);
+
+        Task<IList<Cart>> GetCartByUserId(int userId);
     }
 }

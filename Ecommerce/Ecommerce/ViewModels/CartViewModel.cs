@@ -7,6 +7,6 @@ namespace Ecommerce.ViewModels
     {
         public int UserId { get; set; }
         public string Date { get; set; }
-        public List<Product> Products { get; set; }
+        public IList<CartProduct> Products { get; set; }
     }
 }

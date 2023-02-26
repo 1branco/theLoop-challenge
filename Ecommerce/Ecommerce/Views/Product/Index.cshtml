@@ -2,7 +2,7 @@
 @model IList<ProductViewModel>
 
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = "Products Listing";
 }
 
 <div class="text-center">
@@ -19,6 +19,7 @@
                 <th>Price</th>
                 <th>Category</th>
                 <th>Description</th>
+                <th>Purchase</th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +32,10 @@
                     <td>@product.Title</td>
                     <td>@product.Price</td>
                     <td>@product.Category</td>
-                    <td>@product.Description</td>                    
+                    <td>@product.Description</td>    
+                    <td>
+                        <a class="btn btn-primary" href="@Url.Action("AddToCart","Cart")">Buy</a>
+                    </td>
                 </tr>
             }
         </tbody>
