@@ -1,0 +1,34 @@
+﻿@using Ecommerce.ViewModels;
+@model CartViewModel
+
+@{
+    ViewData["Title"] = "Cart Listing";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Cart listing</h1>
+</div>
+
+<div class="container">
+    <h3 class="p-3 text-center">Cart from <a href="https://fakestoreapi.com/">fakestoreapi.com</a></h3>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                @foreach(var item in Model.Products.GroupBy(x => x.ProductId))
+                {
+                    <td>@item.Select(x => x.ProductId)</td>
+                    <td>@item.Select(x => x.Quantity)</td>
+                }
+                    <td>@Model.Date</td>
+                </tr>            
+        </tbody>
+    </table>
+
+</div>

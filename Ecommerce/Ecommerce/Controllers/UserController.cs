@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
 using Ecommerce.Models;
+using Ecommerce.Services;
 using Ecommerce.Services.Interfaces;
 using Ecommerce.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ecommerce.Controllers
@@ -12,12 +16,14 @@ namespace Ecommerce.Controllers
     public class UserController : Controller
     {
         private readonly IUserService UserService;
+        private readonly ICartService CartService;
         private readonly IMapper Mapper;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, ICartService cartService, IMapper mapper)
         {
             UserService = userService;
             Mapper = mapper;
+            CartService = cartService;
         }
 
         public IActionResult Index()
@@ -25,15 +31,20 @@ namespace Ecommerce.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost]        
         [Route("[controller]/login")]
-        public async Task<IActionResult> Login([FromBody] string username, [FromBody] string password)
+        public async Task<IActionResult> Login([FromBody] Login login)
         {
             try
             {
-                var result = await UserService.Login(new Login() { UserName = "mor_2314", Password = "83r5^_" });
-             
-                return View(result);
+                var result = await UserService.Login(new Login() { username = login.username, password = login.password });
+
+                var newCart = await CartService.GetCartByUserId(2);
+
+                Response.Cookies.Append("CartId", newCart.OrderByDescending(x => x.Date).
+                                                    First().Id.ToString());
+                
+                return RedirectToAction("Index","Product", null);
             }
             catch (Exception)
             {

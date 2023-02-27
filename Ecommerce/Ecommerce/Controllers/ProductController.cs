@@ -20,11 +20,12 @@ namespace Ecommerce.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] string sort = "asc")
+        public async Task<IActionResult> Index([FromQuery] string sort = "asc",
+                                               [FromQuery] int limit = 25)
         {
             try
             {
-                var products = await ProductService.GetAllProducts(sort);
+                var products = await ProductService.GetAllProducts(sort, limit);
                             
                 return View(Mapper.Map<IList<ProductViewModel>>(products));
             }

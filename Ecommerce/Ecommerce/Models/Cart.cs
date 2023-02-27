@@ -9,7 +9,7 @@ namespace Ecommerce.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Date { get; set; }
-        public IList<CartProduct> Products { get; set; }
+        public List<CartProduct> Products { get; set; }
         public int __v { get; set; }
     }
 

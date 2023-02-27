@@ -5,6 +5,7 @@ namespace Ecommerce.ViewModels
 {
     public class CartViewModel
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
         public string Date { get; set; }
         public IList<CartProduct> Products { get; set; }

@@ -16,6 +16,7 @@ namespace Ecommerce.MappingProfiles
 
             CreateMap<Cart, CartViewModel>();
             CreateMap<CartViewModel, Cart>();
+
             CreateMap<CartProduct, Product>();
             CreateMap<Cart, CartProduct>();
 

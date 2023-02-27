@@ -1,0 +1,37 @@
+﻿@model Login
+@{
+    ViewBag.Title = "User login";
+}
+
+
+<h2>login</h2>
+@using (Html.BeginForm("Login", "User", FormMethod.Post))
+{
+    //this is for create form tag
+    @Html.AntiForgeryToken()
+
+    // this is for prevent CSRF attack
+    @Html.ValidationSummary(true)
+
+    <table>
+        <tr>
+            <td>@Html.LabelFor(a => a.username)</td>
+            <td>@Html.TextBoxFor(a => a.username)</td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(a => a.password)
+            </td>
+            <td>
+                @Html.PasswordFor(a => a.password)
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Login" />
+            </td>
+            <td></td>
+        </tr>
+    </table>
+} 

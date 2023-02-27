@@ -13,7 +13,7 @@ namespace Ecommerce.Services
         private readonly IHttpClientFactory HttpClientFactory;
         private readonly HttpClient HttpClient;
 
-        private const string CartsEndpoint = "carts/";
+        private const string CartsEndpoint = "carts";
 
         public CartService(IHttpClientFactory httpClientFactory)
         {
@@ -21,9 +21,14 @@ namespace Ecommerce.Services
             HttpClient = HttpClientFactory.CreateClient();
         }
 
-        public async Task<IList<Cart>> GetAllCarts()
+        public async Task<IList<Cart>> GetAllCarts(string startDate, 
+            string endDate,
+            string sort)
         {
-            var response = await HttpClient.GetAsync(CartsEndpoint);
+
+            var endpoint = string.Format($"{CartsEndpoint}?startdate={startDate}&enddate={endDate}&sort={sort}");
+
+            var response = await HttpClient.GetAsync(endpoint);
 
             var result = await response.Content.ReadAsStringAsync();
 
@@ -34,7 +39,7 @@ namespace Ecommerce.Services
 
         public async Task<Cart> GetCart(int cartId)
         {
-            var response = await HttpClient.GetAsync(CartsEndpoint + cartId);
+            var response = await HttpClient.GetAsync(CartsEndpoint + "/"+ cartId);
 
             var result = await response.Content.ReadAsStringAsync();
 
@@ -45,7 +50,7 @@ namespace Ecommerce.Services
 
         public async Task<Cart> UpdateCart(Cart cart)
         {
-            var response = await HttpClient.PutAsync(CartsEndpoint + cart.Id,
+            var response = await HttpClient.PutAsync(CartsEndpoint + "/" + cart.Id,
                 new StringContent(JsonConvert.SerializeObject(cart), System.Text.Encoding.UTF8, "application/json"));
 
             var result = await response.Content.ReadAsStringAsync();
@@ -53,12 +58,10 @@ namespace Ecommerce.Services
             return JsonConvert.DeserializeObject<Cart>(result);
         }
 
-        public async Task<Cart> CreateNewCart(int userId, IList<Product> products)
-        {
-            var body = new Cart();
-            
+        public async Task<Cart> CreateNewCart(Cart cart)
+        {            
             var response = await HttpClient.PostAsync(CartsEndpoint,
-              new StringContent(JsonConvert.SerializeObject(body), System.Text.Encoding.UTF8, "application/json"));
+              new StringContent(JsonConvert.SerializeObject(cart), System.Text.Encoding.UTF8, "application/json"));
 
             var result = await response.Content.ReadAsStringAsync();
 
@@ -67,7 +70,7 @@ namespace Ecommerce.Services
 
         public async Task<IList<Cart>> GetCartByUserId(int userId)
         {
-            var response = await HttpClient.GetAsync(CartsEndpoint + "user/" + userId);
+            var response = await HttpClient.GetAsync(CartsEndpoint + "/user/" + userId);
 
             var result = await response.Content.ReadAsStringAsync();
 

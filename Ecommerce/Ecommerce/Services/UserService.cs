@@ -48,9 +48,17 @@ namespace Ecommerce.Services
             var response = await HttpClient.PostAsync(LoginEndpoint, 
                 new StringContent(JsonConvert.SerializeObject(login), System.Text.Encoding.UTF8, "application/json"));
 
-            var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var result = await response.Content.ReadAsStringAsync();
 
-            return result;
+            // In case, for example, it gets the credentials wrong
+            if(response.IsSuccessStatusCode)
+            {
+                return result;
+            }
+            else
+            {
+                throw new System.Exception(result);
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Ecommerce.Services.Interfaces
 {
     public interface IProductService
     {
-        Task<IList<Product>> GetAllProducts(string sort);
+        Task<IList<Product>> GetAllProducts(string sort, int limit);
         Task<Product> GetProductById(int Id);
 
 

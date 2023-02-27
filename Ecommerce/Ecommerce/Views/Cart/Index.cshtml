@@ -1,19 +1,19 @@
 ﻿@using Ecommerce.ViewModels;
+@using System.Globalization;
 @model IList<CartViewModel>
 
 @{
-    ViewData["Title"] = "Cart Listing";
+    ViewData["Title"] = "Carts Listing";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Cart listing</h1>
+    <h1 class="display-4">Carts listing</h1>
 </div>
-
 
 <div class="container">
     <h3 class="p-3 text-center">Carts from <a href="https://fakestoreapi.com/">fakestoreapi.com</a></h3>
-    @if (Model.Count == 0)
-    {
+    @if(Model.Count == 0)
+    {        
         <div class="card" style="margin-bottom: 20px">
             <div class="card-header header">
                 <h3 class="p-3 text-center">No carts found for those dates</h3>
@@ -31,29 +31,29 @@
                 <h3>Cart Products: </h3>
             </div>
 
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Product Id</th>
-                        <th>Product Quantity</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Product Id</th>
+                    <th>Product Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>          
                         @foreach (var item in product.Products)
                         {
-                        <tr>
-                            <td>
-                                <ul>@item.ProductId</ul>
-                            </td>
-                            <td>
-                                <ul>@item.Quantity</ul>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <ul>@item.ProductId</ul>
+                                </td>                           
+                                <td>
+                                    <ul>@item.Quantity</ul>
+                                </td>
+                           </tr>
                         }
                     </tr>
-                </tbody>
-            </table>
+            </tbody>
+        </table>
         </div>
-    }
+        }
 </div>
